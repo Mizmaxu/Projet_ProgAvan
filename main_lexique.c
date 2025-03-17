@@ -44,3 +44,6 @@ int main(int argc, char** argv){
     };
     return 0;
 }
+
+
+// gcc main_lexique.c jeton.c -o main
