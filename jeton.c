@@ -61,37 +61,30 @@ token lire_carac(char a,char fonction[100], int index){
             carac.longueur = 1;
             break;
         default:
-            if (a >= '0' && a <= '9'){
+            if (a >= '0' && a <= '9'){ //lecture des chiffres
                 int compteur = 0;
                 int compteur_deci = 1;
                 int point = 0;
                 int nombre = 0; 
                 int longueur = 0;
                 float decimale = 0;
-                // strcpy(carac.type, "REEL\0");
-                // strcpy(carac.valeur, a_str);
                 char a_str[2];
                 
                 while ((fonction[index+compteur]>= '0' && fonction[index+compteur] <= '9') || fonction[index+compteur] == '.'){
-                    printf("caractere : %c \n", fonction[index+compteur]);
                     if (fonction[index+compteur] == '.'){
                         point = point + 1;
-                    } else
-                    
-                    if (point ==0){
+                    } else if (point ==0){ //partie entière
                         a_str[0] = fonction[index + compteur];
                         a_str[1] = '\0';
                         nombre = nombre * 10;
                         nombre = nombre + atoi(a_str);
-                    } else if (point == 1){
+                    } else if (point == 1){ //partie décimale
                         a_str[0] = fonction[index + compteur];
                         a_str[1] = '\0';
                         decimale = decimale * 10;
                         decimale = decimale + atoi(a_str);
-                        compteur_deci = compteur_deci * 10;
-                        
-                        
-                    } else if (point >= 2){
+                        compteur_deci = compteur_deci * 10;     
+                    } else if (point >= 2){ // erreur syntaxique
                         strcpy(carac.type, "ERREUR");
                         strcpy(carac.valeur, "2"); 
                         return carac;
@@ -101,7 +94,7 @@ token lire_carac(char a,char fonction[100], int index){
                     
                     
                 }
-                if (point == 1){
+                if (point == 1){ //réunion parties entière et décimale 
                     float nombre_final = nombre + (decimale/compteur_deci);
                     char nombre_str[compteur+1];
                     sprintf(nombre_str, "%f", nombre_final);
@@ -117,7 +110,7 @@ token lire_carac(char a,char fonction[100], int index){
                     carac.longueur = longueur;
                 }
                 
-            } else if(a >= 'a' && a <= 'z'){
+            } else if(a >= 'a' && a <= 'z'){ //lecture de lettres 
                 char caractere_deux = fonction[index+1];
                 char caractere_trois = fonction[index+2];
                 char caractere_quatre = fonction[index+3];
