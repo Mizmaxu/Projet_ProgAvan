@@ -7,7 +7,7 @@ token lire_carac(char a,char fonction[100], int index){
     switch (a){
         case 'x':
             strcpy(carac.type, "VARIABLE\0");
-            strcpy(carac.valeur, " \0");
+            strcpy(carac.valeur, "x\0");
             carac.longueur = 1;
             break;
         case '(':
@@ -52,11 +52,6 @@ token lire_carac(char a,char fonction[100], int index){
             break;
         case ']':
             strcpy(carac.type, "BAR_FERM\0");
-            strcpy(carac.valeur, " \0");
-            carac.longueur = 1;
-            break;
-        case ' ':
-            strcpy(carac.type, "ESPACE\0");
             strcpy(carac.valeur, " \0");
             carac.longueur = 1;
             break;
