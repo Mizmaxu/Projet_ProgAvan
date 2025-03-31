@@ -55,6 +55,11 @@ token lire_carac(char a,char fonction[100], int index){
             strcpy(carac.valeur, " \0");
             carac.longueur = 1;
             break;
+        case ' ' :
+            strcpy(carac.type, "ESPACE\0");
+            strcpy(carac.valeur, " \0");
+            carac.longueur = 1;
+            break;
         default:
             if (a >= '0' && a <= '9'){ //lecture des chiffres
                 int compteur = 0;

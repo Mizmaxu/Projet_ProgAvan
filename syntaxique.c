@@ -85,7 +85,7 @@ Node* synth(struct jeton T[], int*j,int taille){
 
     while(i< taille && strcmp(T[i].type, "FIN") != 0){
         afficheArbre(Arbre);
-        printf(" j : %d i : %d %s \n",*j,i,T[i].type);
+        printf("j : %d  %s \n",*j,T[i].type);
         if (strcmp(T[i].type, "VARIABLE") == 0 || strcmp(T[i].type, "REEL") == 0) {Arbre = creerArbre(T[i], NULL, NULL); (*j)++;};
         if (strcmp(T[i].type, "OPERATEUR") == 0) {
             (*j) ++;
@@ -100,6 +100,7 @@ Node* synth(struct jeton T[], int*j,int taille){
         };
         if (est_dans_liste(liste_par_bar,4,T[i].type) == 0 ){
             (*j)++;
+            if (strcmp(T[i].type,"PAR_OUV") == 0){Arbre->fg = synth(T,j,taille);}
             if (strcmp(T[i].type,"PAR_FERM") == 0){return Arbre;}
         }
         i= *j;
