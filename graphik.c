@@ -1,4 +1,7 @@
 #include "graphik.h"
+#include "jeton.h"
+#include "evaluation.h"
+#include "syntaxique.h"
 
 
 
