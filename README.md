@@ -1,7 +1,7 @@
 # Projet_ProgAvan
 
 Le projet consiste en la réalisation d'un grapheur d'expressions fonctionnelles, c'est à dire d'un logiciel destiné à représenter graphiquement des expressions du type:
-sin(x*abs(x))+2 , exp(x+(6*log(x+1))) etc...
+sin(x\*abs(x))+2 , exp(x+(6\*log(x+1))) etc...
 Le projet est découpé en 4 grandes étapes de traitements nécessaires pour passer d'une expression fonctionnelle à une représentation graphique:
 - analyse lexicale
 - analyse syntaxique
