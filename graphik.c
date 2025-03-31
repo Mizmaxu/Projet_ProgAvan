@@ -40,7 +40,7 @@ void myKey(int c) {
     case 1:
     switch (c) {
         case 8: 
-        case 46: // Touche suppr
+        // case 46: // Touche suppr
             if(inputIndex>0){
             input[--inputIndex] = '\0';}
 
@@ -67,7 +67,7 @@ void myKey(int c) {
         avancement--;
         break;
         case 8: 
-        case 46: // Touche suppr
+        // case 46: // Touche suppr
             if(input1Index>0){
             input1[--input1Index] = '\0';}
 
@@ -91,7 +91,7 @@ void myKey(int c) {
         avancement--;
         break;
     case 8: 
-    case 46: // Touche suppr
+    // case 46: // Touche suppr
         if(input2Index>0){
         input2[--input2Index] = '\0';}
 
