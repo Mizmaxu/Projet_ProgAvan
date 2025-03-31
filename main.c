@@ -1,6 +1,7 @@
 #include "jeton.h"
 #include "evaluation.h"
 #include "syntaxique.h"
+#include "graphik.h"
 
 int main(int argc, char** argv){
     char fonction[100];

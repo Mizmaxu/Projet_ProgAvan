@@ -91,7 +91,6 @@ Node* synth(struct jeton T[], int*j,int taille){
             (*j) ++;
             Node*temp_op = synth(T,j,taille);
             Arbre = creerArbre(T[i],Arbre,temp_op);
-            return Arbre;
          };
         if(strcmp(T[i].type,"FONCTION") == 0){
             (*j) += 2;
