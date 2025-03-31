@@ -35,6 +35,7 @@ void myKey(int c) {
 
    }
     break;
+
    
     case 1:
     switch (c) {
@@ -140,9 +141,7 @@ void myKey(int c) {
     
 }
 
-float fonction(float x){
-    return -(x*x);
-}
+
 
 float normalize(float value, float min, float max) {
     return 2.0f * (value - min) / (max - min) - 1.0f;
@@ -154,7 +153,7 @@ void trace_axes(){
     line(-1.0, 0.0, 1.0, 0.0);
     line(0.0, -1.0, 0.0, 1.0);
 }
-void trace_fonction(float borne1, float borne2) {
+void trace_fonction(float borne1, float borne2, Node* arbre) {
     setcolor(1.0, 0.0, 0.0); 
 
     // *min = fonction(borne1);
@@ -172,9 +171,9 @@ void trace_fonction(float borne1, float borne2) {
     
 
     // beginlines(-1, normalize(fonction(borne1, ymin, ymax));
-    beginlines(borne1, fonction(borne1));
+    beginlines(borne1, evaluate(arbre, borne1));
     for (float x = borne1; x <= borne2; x += (borne2-borne1)/10000) {
-        lineto(x, fonction(x));
+        lineto(x, evaluate(arbre, x));
     }
     finishlines();
 }
@@ -225,6 +224,7 @@ void myDraw(void) {
 
         char fonction[100];
         strcpy(fonction,input);
+        printf("%s\n",fonction);
         printf("Votre fonction  : ");
         //scanf("%s", fonction);
         int longueur_chaine = 0;
@@ -232,7 +232,7 @@ void myDraw(void) {
             if (fonction[i] >= 'A' && fonction[i] <= 'Z'){
                 fonction[i] = fonction[i] + 32;
             }
-            if (fonction[i] == '\n'){
+            if (fonction[i] == '\0'){
                 longueur_chaine = i +1 ;
                 break;
             };
@@ -276,15 +276,15 @@ void myDraw(void) {
             int index = 0;
             Node*arbre = synth(tableau,&index,taille_tab(tableau));
             afficheArbre(arbre);
+            trace_axes();
+            trace_fonction(borne1, borne2, arbre);
             
-            float x = 5; // Exemple de valeur pour X
-            float resultat = evaluate(arbre, x);
-            
-            printf("Resultat pour X = %.2f : %.2f\n", x, resultat);
+        }else
+        {
+            outtextxy(xtitre, ytitre, err);
         }
+        
 
-        trace_axes();
-        trace_fonction(-100, 100); // mettre borne1 et borne2
 
 
     }
