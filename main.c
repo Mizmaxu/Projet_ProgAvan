@@ -1,5 +1,5 @@
 #include "jeton.h"
-//#include "evaluation.h"
+#include "evaluation.h"
 #include "syntaxique.h"
 
 int main(int argc, char** argv){
@@ -54,7 +54,13 @@ int main(int argc, char** argv){
     printf("%s",err);
     if (strcmp(err,"")== 0){
         int index = 0;
-        afficheArbre(synth(tableau,&index,taille_tab(tableau)));
+        Node*arbre = synth(tableau,&index,taille_tab(tableau));
+        afficheArbre(arbre);
+        
+        float x = 5; // Exemple de valeur pour X
+        float resultat = evaluate(arbre, x);
+        
+        printf("Resultat pour X = %.2f : %.2f\n", x, resultat);
     }
 
 
