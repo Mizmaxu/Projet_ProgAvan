@@ -1,16 +1,31 @@
-#ifndef sheeesh
-#include <stdio.h>
-#include <stdlib.h>
+#ifndef EVALUATION_H
+#define EVALUATION_H
+
 #include <math.h>
 
+  struct jeton
+  {
+      char type[10];
+      char valeur[15];
+      int longueur;
+  };
+  
+  typedef struct jeton token;
+  token lire_carac(char a,char fonction[100],int index);
+
 typedef struct Node {
-    char type; // 'N' pour nombre, 'X' pour variable, 'O' pour opérateur, 'F' pour fonction
-    float valeur; // Utilisé si c'est un nombre
-    char op; // Utilisé si c'est un opérateur ou une fonction
-    struct Node *gau;
-    struct Node *dro;
+    struct jeton jeton;  // Contient les informations (type, valeur, etc.)
+    struct Node *fg;     // Fils gauche
+    struct Node *fd;     // Fils droit
 } Node;
 
-float evaluate(Node* noeud, float x);
+/**
+ * @brief Évalue l'expression représentée par l'arbre binaire.
+ * 
+ * @param node Pointeur sur la racine de l'arbre.
+ * @param x Valeur de la variable (utilisée si le jeton est de type "VARIABLE").
+ * @return float Résultat de l'évaluation ou NAN en cas d'erreur.
+ */
+float evaluate(Node* node, float x);
 
 #endif
