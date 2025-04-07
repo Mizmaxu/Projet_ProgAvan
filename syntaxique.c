@@ -85,7 +85,7 @@ Node* synth(struct jeton T[], int*j,int taille){
 
     while(i< taille && strcmp(T[i].type, "FIN") != 0){
         afficheArbre(Arbre);
-        printf("j : %d  %s \n",*j,T[i].type);
+        // printf("j : %d  %s \n",*j,T[i].type);
         if (strcmp(T[i].type, "VARIABLE") == 0 || strcmp(T[i].type, "REEL") == 0) {Arbre = creerArbre(T[i], NULL, NULL); (*j)++;};
         if (strcmp(T[i].type, "OPERATEUR") == 0) {
             (*j) ++;
@@ -110,7 +110,7 @@ Node* synth(struct jeton T[], int*j,int taille){
 
 void afficheArbre(Node *a) {
     if (a == NULL) return;
-    printf("%s ",a->jeton.valeur);
+    // printf("%s ",a->jeton.valeur);
     afficheArbre(a->fg);
     afficheArbre(a->fd);
 }

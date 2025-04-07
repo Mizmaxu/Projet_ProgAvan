@@ -233,7 +233,6 @@ void trace_fonction(float borne1, float borne2, Node* arbre) {
     float max = evaluate(arbre, borne1);
 
     float jsp = maxi(1.0,10.0);
-    printf("%d AAAAAAAAAAAAAA\n", maxi(1.0,10.0));
 
     // Parcours pour déterminer min et max de y
     for (float x = borne1; x <= borne2; x += step) {
@@ -325,20 +324,16 @@ void myDraw(void) {
         if (borne1 == borne2 && borne1 == 0.0)
         {
             borne1 = -10; borne2 = 10;
-            printf("123\n");
-        printf("%d, %d\n", borne1, borne2); 
 
         }
-        printf("%d, %d\n", borne1, borne2); 
         affiche_boutons(2);
 
         // mettre toutes les fonctions
 
         char fonction[100];
         strcpy(fonction,input);
-        printf("%s\n",fonction);
-        printf("Votre fonction  : ");
-        //scanf("%s", fonction);
+        // printf("%s\n",fonction);
+        // printf("Votre fonction  : ");
         int longueur_chaine = 0;
         for (int i = 0; i<100 ; i++){
             if (fonction[i] >= 'A' && fonction[i] <= 'Z'){
@@ -372,7 +367,7 @@ void myDraw(void) {
             };
         };
         for (int i = 0; i<longueur_chaine; i++){
-            printf("Type : %s ; Valeur : %s \n", tableau[i].type, tableau[i].valeur);
+            // printf("Type : %s ; Valeur : %s \n", tableau[i].type, tableau[i].valeur);
             if (tableau[i].type[0] == 'F' && tableau[i].type[1] == 'I'){
                 break;
             }
