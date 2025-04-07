@@ -382,7 +382,6 @@ void myDraw(void) {
         if (strcmp(err,"")== 0){
             int index = 0;
             Node*arbre = synth(tableau,&index,taille_tab(tableau));
-            afficheArbre(arbre);
             trace_axes();
             trace_fonction(borne1, borne2, arbre);
             
