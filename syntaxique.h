@@ -20,6 +20,6 @@ int taille_tab(struct jeton tab[]);
 char * erreur(struct jeton T[]);
 Node* synth(struct jeton T[], int*j, int taille);
 void afficheJeton(struct jeton J);
-void afficheArbre(Node*a);
+void afficheArbre(Node*a,int niveau);
 
 #endif
