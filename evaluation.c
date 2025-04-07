@@ -5,41 +5,46 @@
 #include <math.h>
 
 /**
- * @brief Fonction récursive qui évalue l'expression mathématique représentée par l'arbre.
- *
- * Le traitement se fait en fonction du type de jeton contenu dans chaque noeud :
- *  - "REEL" : conversion de la chaîne de caractère en flottant.
- *  - "VARIABLE" : retourne la valeur passée en paramètre x.
- *  - "OPERATEUR" : applique l'opérateur (les valeurs attendues sont "PLUS", "MOINS", "FOIS", "DIV", "PUIS").
- *  - "FONCTION" : évalue la fonction (les valeurs attendues sont "sin", "cos", "abs", "exp", "sqrt", "sinc", "log", "tan", "ent", "val_neg").
- *
- * @param node Pointeur sur la racine de l'arbre.
- * @param x Valeur de la variable.
- * @return float Résultat de l'évaluation ou NAN en cas d'erreur.
+ 
+  L'eval se fait en fonction du type de jeton contenu dans chaque noeud :
+   - "REEL" : conversion de la chaîne de caractère en flottant.
+   - "VARIABLE" : retourne la valeur passée en paramètre x.
+   - "OPERATEUR" : applique l'opérateur (les valeurs attendues sont "PLUS", "MOINS", "FOIS", "DIV", "PUIS").
+   - "FONCTION" : évalue la fonction (les valeurs attendues sont "sin", "cos", "abs", "exp", "sqrt", "sinc", "log", "tan", "ent", "val_neg").
+ 
+ node Pointeur sur la racine de l'arbre.
+
  */
 float evaluate(Node* node, float x) {
     if (node == NULL) {
         fprintf(stderr, "Erreur: node NULL.\n");
         return NAN;
-    }
+    }//Si le nœud est vide (arbre mal formé), on retourne NAN
     
-    // Évaluation des constantes et de la variable.
+    // evaluation des constantes et de la variable. Si le jeton est un réel en texte et on le convertit en float avec atof
     if (strcmp(node->jeton.type, "REEL") == 0) {
         return atof(node->jeton.valeur);
-    }
+
+    }//Si c’est une variable, on retourne simplement la valeur passée en paramètre
+
     if (strcmp(node->jeton.type, "VARIABLE") == 0) {
         return x;
     }
     
-    // Évaluation d'un opérateur.
+    // evaluation d'un opérateur. on verifie que le jeton est bien un operateur. 
     if (strcmp(node->jeton.type, "OPERATEUR") == 0) {
+        //on verifie que les deux fils sont non nul.
         if (node->fg == NULL || node->fd == NULL) {
             fprintf(stderr, "Erreur: opérateur sans opérandes valides.\n");
             return NAN;
         }
+        
+        //evaluation des deux cotés :
         float left = evaluate(node->fg, x);
         float right = evaluate(node->fd, x);
         
+        // ici on traite chaque OP 
+
         if (strcmp(node->jeton.valeur, "PLUS") == 0) {
             return left + right;
         } else if (strcmp(node->jeton.valeur, "MOINS") == 0) {
@@ -60,7 +65,7 @@ float evaluate(Node* node, float x) {
         }
     }
     
-    // Évaluation d'une fonction.
+    // evaluation d'une fonction. on fais exactement la mem chose qu'avec les operateurs
     if (strcmp(node->jeton.type, "FONCTION") == 0) {
         if (node->fg == NULL) {
             fprintf(stderr, "Erreur: fonction sans argument.\n");
