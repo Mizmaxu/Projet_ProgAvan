@@ -222,8 +222,8 @@ void trace_axes(){
     line(0.0, -1.0, 0.0, 1.0);
 }
 float maxi(float a, float b) {
-    return (a > b) ? a : b;
-}
+    return (a > b) ? a : b;}
+
 
 void trace_fonction(float borne1, float borne2, Node* arbre) {
     setcolor(1.0, 0.0, 0.0); 
