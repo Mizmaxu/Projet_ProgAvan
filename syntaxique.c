@@ -82,25 +82,32 @@ Node* synth(struct jeton T[], int*j,int taille){
     Node*Arbre = NULL;
     int i = *j;
 
-
     while(i< taille && strcmp(T[i].type, "FIN") != 0){
-        afficheArbre(Arbre);
-        // printf("j : %d  %s \n",*j,T[i].type);
-        if (strcmp(T[i].type, "VARIABLE") == 0 || strcmp(T[i].type, "REEL") == 0) {Arbre = creerArbre(T[i], NULL, NULL); (*j)++;};
+        // printf(" j : %d i : %d %s \n",*j,i,T[i].type);
+        if (strcmp(T[i].type, "VARIABLE") == 0 || strcmp(T[i].type, "REEL") == 0) {
+            Arbre = creerArbre(T[i], NULL, NULL); 
+            (*j)++;
+        };
         if (strcmp(T[i].type, "OPERATEUR") == 0) {
             (*j) ++;
-            Node*temp_op = synth(T,j,taille);
-            Arbre = creerArbre(T[i],Arbre,temp_op);
-         };
+            if (strcmp(T[i+1].type,"REEL")==0 || strcmp(T[i+1].type,"VARIABLE")==0){(*j)++; Arbre = creerArbre(T[i],Arbre,creerArbre(T[i+1],NULL,NULL));}
+            else{
+                Node*temp_op = synth(T,j,taille);
+                Arbre = creerArbre(T[i],Arbre,temp_op);
+            }
+            if (strcmp(T[*j-1].type,"PAR_FERM")==0 ){return Arbre ;}
+        }
         if(strcmp(T[i].type,"FONCTION") == 0){
             (*j) += 2;
             Node*temp_f = synth(T,j,taille);
             Arbre = creerArbre(T[i],temp_f,NULL);
         };
+            
         if (est_dans_liste(liste_par_bar,4,T[i].type) == 0 ){
             (*j)++;
-            if (strcmp(T[i].type,"PAR_OUV") == 0){Arbre->fg = synth(T,j,taille);}
-            if (strcmp(T[i].type,"PAR_FERM") == 0){return Arbre;}
+            if (strcmp(T[i].type,"PAR_OUV") == 0){if(Arbre!=NULL) {Arbre->fd = synth(T,j,taille);}
+        else{Arbre = synth(T,j,taille);}}
+            if (strcmp(T[i].type,"PAR_FERM") == 0){ return Arbre;}
         }
         i= *j;
     }
@@ -108,9 +115,10 @@ Node* synth(struct jeton T[], int*j,int taille){
 }
 
 
-void afficheArbre(Node *a) {
+void afficheArbre(Node *a, int niveau) {
     if (a == NULL) return;
-    // printf("%s ",a->jeton.valeur);
-    afficheArbre(a->fg);
-    afficheArbre(a->fd);
+    for (int i = 0; i < niveau; i++) printf("  ");  // Indentation
+    printf("%s\n", a->jeton.valeur);
+    afficheArbre(a->fg, niveau + 1);
+    afficheArbre(a->fd, niveau + 1);
 }
