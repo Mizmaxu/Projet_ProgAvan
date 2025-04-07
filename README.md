@@ -1,4 +1,6 @@
 # Projet_ProgAvan
+commande de compilation : 
+gcc -o test1 Graph.c evaluation.c jeton.c graphik.c syntaxique.c -I./ -L./ -lglut32 -lglu32 -lopengl32
 
 Le projet consiste en la réalisation d'un grapheur d'expressions fonctionnelles, c'est à dire d'un logiciel destiné à représenter graphiquement des expressions du type:
 sin(x\*abs(x))+2 , exp(x+(6\*log(x+1))) etc...
