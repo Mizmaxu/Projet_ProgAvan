@@ -22,6 +22,34 @@ float xborne2 = 0.6;
 float yborne2 = -0.7;
 float xtitre = -1;
 float ytitre = 0.8;
+float btn_suiv_x1 = 0.6f, btn_suiv_y1 = 0.85f;
+float btn_suiv_x2 = 0.95f, btn_suiv_y2 = 0.98f;
+
+float btn_prec_x1 = 0.2f, btn_prec_y1 = 0.85f;
+float btn_prec_x2 = 0.55f, btn_prec_y2 = 0.98f;
+
+
+
+void myMouse(int button, int state, int x, int y) {
+   
+    
+    if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
+        float fx = (float)x / 320.0f - 1.0f;
+        float fy = 1.0f - (float)y / 240.0f;
+
+        // Bouton Précédent
+        if (fx >= btn_prec_x1 && fx <= btn_prec_x2 && fy >= btn_prec_y1 && fy <= btn_prec_y2 && avancement <=5) {
+            avancement--;
+            if (avancement < 0) avancement = 0;
+        }
+
+        // Bouton Suivant
+        if (fx >= btn_suiv_x1 && fx <= btn_suiv_x2 && fy >= btn_suiv_y1 && fy <= btn_suiv_y2 && avancement <5) {
+            avancement++;
+
+        }
+    }
+}
 
 
 void myKey(int c) {
@@ -141,6 +169,46 @@ void myKey(int c) {
     
 }
 
+void affiche_boutons(int nbr){
+    switch (nbr)
+    {
+        case 0: // suiv uniquement
+        setcolor(0.8, 0.8, 0.8);
+        bar(btn_suiv_x1, btn_suiv_y1, btn_suiv_x2, btn_suiv_y2);
+        setcolor(0.0, 0.0, 0.0);
+        outtextxy(btn_suiv_x1 + 0.06f, btn_suiv_y1 + 0.04f, "Suivant");
+        break;
+
+        case 1://les 2
+        setcolor(0.8, 0.8, 0.8);
+        bar(btn_suiv_x1, btn_suiv_y1, btn_suiv_x2, btn_suiv_y2);
+        setcolor(0.0, 0.0, 0.0);
+        outtextxy(btn_suiv_x1 + 0.06f, btn_suiv_y1 + 0.04f, "Suivant");
+        setcolor(0.8, 0.8, 0.8);
+        bar(btn_prec_x1, btn_prec_y1, btn_prec_x2, btn_prec_y2);    
+        setcolor(0.0, 0.0, 0.0);
+        outtextxy(btn_prec_x1 + 0.02f, btn_prec_y1 + 0.04f, "Precedent");
+    
+        /* code */
+        break;
+
+        case 2: // précédent uniquement
+        setcolor(0.8, 0.8, 0.8);
+        bar(btn_prec_x1, btn_prec_y1, btn_prec_x2, btn_prec_y2);    
+        setcolor(0.0, 0.0, 0.0);
+        outtextxy(btn_prec_x1 + 0.02f, btn_prec_y1 + 0.04f, "Precedent");
+    
+        /* code */
+        break;
+    
+    default:
+        break;
+    }
+}
+
+float mapFloat(float x, float in_min, float in_max, float out_min, float out_max) {
+    return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}
 
 
 float normalize(float value, float min, float max) {
@@ -153,27 +221,41 @@ void trace_axes(){
     line(-1.0, 0.0, 1.0, 0.0);
     line(0.0, -1.0, 0.0, 1.0);
 }
+float maxi(float a, float b) {
+    return (a > b) ? a : b;
+}
+
 void trace_fonction(float borne1, float borne2, Node* arbre) {
     setcolor(1.0, 0.0, 0.0); 
+    float step = (borne2 - borne1) / 10000.0f;
 
-    // *min = fonction(borne1);
-    // *max = fonction(borne1);
+    float min = evaluate(arbre, borne1);
+    float max = evaluate(arbre, borne1);
 
-    // for (float x = borne1; x <= borne2; x += step) {
-    //     float y = f(x);
-    //     if (y < *min) {
-    //         *min = y;
-    //     }
-    //     if (y > *max) {
-    //         *max = y;
-    //     }
-    // }
-    
+    float jsp = maxi(1.0,10.0);
+    printf("%d AAAAAAAAAAAAAA\n", maxi(1.0,10.0));
 
-    // beginlines(-1, normalize(fonction(borne1, ymin, ymax));
-    beginlines(borne1, evaluate(arbre, borne1));
-    for (float x = borne1; x <= borne2; x += (borne2-borne1)/10000) {
-        lineto(x, evaluate(arbre, x));
+    // Parcours pour déterminer min et max de y
+    for (float x = borne1; x <= borne2; x += step) {
+        float y = evaluate(arbre, x);
+        if (y < min) {
+            min = y;
+        }
+        if (y > max) {
+            max = y;
+        }
+    }
+
+
+    // Démarrage du tracé : on mappe borne1 de [borne1, borne2] vers [-1, 1]
+    // et la valeur y correspondante de [min, max] vers [-1, 1]
+    beginlines(mapFloat(borne1, borne1, borne2, -1.0, 1.0),
+               mapFloat(evaluate(arbre, borne1), min, max, -1.0, 1.0));
+               
+    // Tracé de la courbe
+    for (float x = borne1; x <= borne2; x += step) {
+        lineto(mapFloat(x, borne1, borne2, -1.0, 1.0),
+               mapFloat(evaluate(arbre, x), min, max, -1.0, 1.0));
     }
     finishlines();
 }
@@ -181,19 +263,24 @@ void trace_fonction(float borne1, float borne2, Node* arbre) {
 
 void myDraw(void) {
     setcolor(0.0F, 0.0F, 0.0F);
-    char avance[10];
-    sprintf(avance, "%d", avancement);    
-    outtextxy(0.9,-0.8,avance);
-    outtextxy(-0.9, 0.9, "enter pour avancer, esc pour revenir");
     if (avancement==0)
     {
-        outtextxy(xtitre,ytitre, "TITRE 1");
+        outtextxy(xtitre,ytitre, "GRAPHX");
+        affiche_boutons(0);
+
+
 
     }
     else if (avancement==1)
     {           outtextxy(xtitre,ytitre, "Entrez la formule");
 
         outtextxy(xformule,yformule, input);
+        outtextxy(xborne1, yborne1, input1);
+        outtextxy(xborne2, yborne2, input2);
+
+        affiche_boutons(1);
+
+        
 
     }
     else if (avancement == 2 ) // borne 1
@@ -202,12 +289,17 @@ void myDraw(void) {
         outtextxy(xformule,yformule, input);
         outtextxy(xborne1, yborne1, input1);
         outtextxy(xborne2, yborne2, input2);
+
+        affiche_boutons(1);
+
     }else if (avancement == 3 ) // borne 2
     {
         outtextxy(xformule,yformule, input);
         outtextxy(xtitre,ytitre, "Entrez la 2eme borne");
         outtextxy(xborne1, yborne1, input1);
         outtextxy(xborne2, yborne2, input2);
+        affiche_boutons(1);
+
         
     }else if (avancement == 4)
     {
@@ -215,11 +307,31 @@ void myDraw(void) {
         outtextxy(xtitre,ytitre, "Confirmation");
         outtextxy(xborne1, yborne1, input1);
         outtextxy(xborne2, yborne2, input2);
+        affiche_boutons(1);
+
     }
+    else if (avancement == 5 && (strcmp(input, "")==0 || strcmp(input, "Veuillez entrer une formule")==0))
+    {
+        avancement = 1;
+        strcpy(input, "Veuillez entrer une formule");
+    }
+    
     else if (avancement == 5)
     {
+        
+        
         float borne1 = atof(input1);
         float borne2 = atof(input2);
+        if (borne1 == borne2 && borne1 == 0.0)
+        {
+            borne1 = -10; borne2 = 10;
+            printf("123\n");
+        printf("%d, %d\n", borne1, borne2); 
+
+        }
+        printf("%d, %d\n", borne1, borne2); 
+        affiche_boutons(2);
+
         // mettre toutes les fonctions
 
         char fonction[100];
@@ -283,6 +395,11 @@ void myDraw(void) {
         {
             outtextxy(xtitre, ytitre, err);
         }
+        if (strcmp(input, "")==0 || strcmp(input, "Veuillez entrer une formule")==0)
+        {
+            avancement = 1;
+            strcpy(input, "Veuillez entrer une formule");
+        }
         
 
 
@@ -295,7 +412,6 @@ void myDraw(void) {
 }
 
 int main(int argc, char **argv) {
-    InitGraph(argc, argv, "GraphX", 640, 480, myDraw, myKey);
-
+    InitGraph(argc, argv, "CALISTE", 640, 480, myDraw, myKey, myMouse);
     return 0;
 }

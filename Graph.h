@@ -1,5 +1,7 @@
 #ifndef GRA_H
 #define GRA_H
+#include "glut.h"
+
 
 /*
 * @file Graph.h
@@ -36,7 +38,7 @@
 */
 void InitGraph(int ac,char *av[], const char *WinName,
                const int w, const int h, void (*Draw)(void),
-               void (*Key)(int c));
+               void (*Key)(int c), void (*Mouse)(int, int, int, int));
 /**
 * line
 *

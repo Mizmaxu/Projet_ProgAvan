@@ -1,5 +1,4 @@
 #include <windows.h>
-#include "glut.h"
 #include "graph.h"
 
 /**
@@ -34,7 +33,7 @@ static void GlutReshape(const int w,const int h)
 
 static void GlutIdle(void)
 {
-//  glutPostRedisplay();
+ glutPostRedisplay();
 }
 
 static void GlutKey(const unsigned char c,const int x,const int y)
@@ -110,7 +109,7 @@ static void GlutDraw(void)
 
 void InitGraph(int ac,char *av[],
                const char *WinName,const int w,const int h,void (*Draw)(void),
-               void (*Key)(int))
+               void (*Key)(int), void (*Mouse)(int, int, int, int))
 {
   glutInit(&ac,av);
   Width=w;
@@ -125,6 +124,9 @@ void InitGraph(int ac,char *av[],
   glutKeyboardFunc(GlutKey);
   AppliDraw=Draw;
   glutDisplayFunc(GlutDraw);
+  if (Mouse) {
+    glutMouseFunc(Mouse);  // Seulement si une fonction est fournie
+}
   InitDisplay();  
   glutMainLoop();  
 }
