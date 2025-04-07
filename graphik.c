@@ -80,6 +80,14 @@ void myKey(int c) {
             case 27:
             avancement--;
             break;
+            case 36:
+            printf("^");
+            if (inputIndex < 99) {
+                input[inputIndex++] = '^'; // Ajouter le caractère à l'entrée
+                input[inputIndex] = '\0'; // Terminer la chaîne
+                // printf("%s \n", input11);
+            }
+            break;
         default:
             if (inputIndex < 99) {
                 input[inputIndex++] = c; // Ajouter le caractère à l'entrée
@@ -104,6 +112,14 @@ void myKey(int c) {
         case 13://entrée
             avancement++;
             break;
+            case 36:
+            printf("^");
+            if (input1Index < 99) {
+                input1[input1Index++] = '^'; // Ajouter le caractère à l'entrée
+                input1[input1Index] = '\0'; // Terminer la chaîne
+                // printf("%s \n", input11);
+            }
+            break;
         default:
             if (input1Index < 99) {
                 input1[input1Index++] = c; // Ajouter le caractère à l'entrée
@@ -127,6 +143,14 @@ void myKey(int c) {
         break;
     case 13://entrée
         avancement++;
+        break;
+        case 36:
+        printf("^");
+        if (input2Index < 99) {
+            input2[input2Index++] = '^'; // Ajouter le caractère à l'entrée
+            input2[input2Index] = '\0'; // Terminer la chaîne
+            // printf("%s \n", input11);
+        }
         break;
     default:
         if (input2Index < 99) {
