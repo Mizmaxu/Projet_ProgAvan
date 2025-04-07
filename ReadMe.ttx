@@ -1,0 +1,44 @@
+/*
+Module d'évaluation
+Le module d'évaluation permet de calculer la valeur d'une expression mathématique représentée sous la forme d'un arbre syntaxique. L'arbre est constitué de nœuds qui contiennent des jetons correspondant à des opérateurs, des fonctions, des nombres ou des variables.
+1 Structure des nœuds
+Chaque nœud de l'arbre est de type Node et contient :
+Un jeton (jeton), qui décrit le type d'élément (opérateur, nombre, fonction, etc.).
+
+
+Deux pointeurs (fg et fd) vers les sous-arbres gauche et droit.
+
+
+2 Fonction evaluate
+La fonction evaluate(Node* noeud, float x) effectue une récursion sur l'arbre pour évaluer l'expression.
+Si le nœud contient un nombre, la valeur est retournée directement.
+
+
+Si le nœud représente la variable X, la valeur de x est retournée.
+
+
+Si le nœud est un opérateur (+, -, *, /), la fonction évalue récursivement les sous-arbres gauche et droit avant d'appliquer l'opération.
+
+
+Si le nœud représente une fonction mathématique (sin, cos, exp, etc.), la fonction est appliquée au résultat de l'évaluation du sous-arbre gauche.
+
+
+En cas d'erreur (division par zéro, opérateur inconnu, etc.), un message d'erreur est affiché et NAN est retourné.
+3 Compilation
+Pour compiler le programme :
+gcc -o evaluation evaluation.c main.c -lm
+
+le programme peut être exécuté avec :
+./programme 
+
+Le programme affichera le résultat de l'évaluation de l'expression prédéfinie (par exemple (X + 3) * 2 ).
+4 Modification du test
+Le test dans main.c peut être modifié pour évaluer une autre expression. Par exemple, pour tester (X - 4) / 2, modifiez main.c comme suit :
+struct jeton minusJeton = {"OPERATEUR", "MOINS"};
+struct jeton fourJeton = {"REEL", "4"};
+struct jeton divJeton = {"OPERATEUR", "DIV"};
+
+Node fourNode = {fourJeton, NULL, NULL};
+Node minusNode = {minusJeton, &xNode, &fourNode};
+Node divNode = {divJeton, &minusNode, &twoNode};
+*/
