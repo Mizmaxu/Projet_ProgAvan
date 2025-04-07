@@ -268,18 +268,18 @@ void trace_fonction(float borne1, float borne2, Node* arbre) {
             max = y;
         }
     }
-
+    // printf("min : %d, max : %d \n",min,max);
 
     // Démarrage du tracé : on mappe borne1 de [borne1, borne2] vers [-1, 1]
     // et la valeur y correspondante de [min, max] vers [-1, 1]
     beginlines(mapFloat(borne1, borne1, borne2, -1.0, 1.0),
-               mapFloat(evaluate(arbre, borne1), min, max, -1.0, 1.0));
-               
-    // Tracé de la courbe
-    for (float x = borne1; x <= borne2; x += step) {
-        lineto(mapFloat(x, borne1, borne2, -1.0, 1.0),
-               mapFloat(evaluate(arbre, x), min, max, -1.0, 1.0));
-    }
+    evaluate(arbre, borne1)/10);
+    
+// Tracé de la courbe
+for (float x = borne1; x <= borne2; x += step) {
+lineto(mapFloat(x, borne1, borne2, -1.0, 1.0),
+    evaluate(arbre,x)/10);
+}
     finishlines();
 }
 
